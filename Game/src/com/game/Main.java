@@ -86,38 +86,43 @@ public class Main {
         System.out.println("4-离开(0金币)");
         System.out.print("你的选择:");
         int n = sc.nextInt();
-        if(n == 1 && hero.getId() == 3) {
+        if(n == 1 && hero.getId() == 3 && hero.getMoney() >= 10) {
             hero.setBlood(200);
             hero.setEnergy(0);
             hero.setMoney(hero.getMoney() - 10);
             printSign();
         }
-        else if(n == 1 && hero.getId() == 2) {
+        else if(n == 1 && hero.getId() == 2 && hero.getMoney() >= 10) {
             hero.setBlood(100);
             hero.setEnergy(200);
             hero.setMoney(hero.getMoney() - 10);
             printSign();
         }
-        else if(n == 1 && hero.getId() == 1) {
+        else if(n == 1 && hero.getId() == 1 && hero.getMoney() >= 10) {
             hero.setBlood(100);
             hero.setEnergy(100);
             hero.setMoney(hero.getMoney() - 10);
             printSign();
         }
 
-        if(n == 2) {
+        if(n == 2 && hero.getMoney() >= 5) {
             hero.setStrength(100);
             hero.setMoney(hero.getMoney() - 5);
             printSign();
         }
 
-        if(n == 3) {
+        if(n == 3 && hero.getMoney() >= 10) {
             hero.setLevel(hero.getLevel() + 1);
             hero.setMoney(hero.getMoney() - 10);
             printSign();
         }
         if(n == 4)
             printSign();
+
+        else {
+            System.out.print("余额不足!");
+            printSign();
+        }
     }
 
     public static void Fight() {
