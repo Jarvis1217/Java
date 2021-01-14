@@ -10,36 +10,29 @@
 
 <style>
     #app {
-        width: 500px;
+        width: 600px;
         margin: auto;
         line-height: 30px;
     }
     .tb {
         margin: auto;
-        margin-top: 20px;
     }
     .btnadd {
-       margin-left: 90px;
+       margin-left: 30px;
     }
     .btnup {
-        margin-left: 130px;
+        margin-left: 160px;
+    }
+    .operation {
+        margin-top: 36px;
+        text-align: center;
+        width: 500px;
+        margin: auto;
     }
 </style>
 
 <body>
 <div id="app">
-    商品:<input type="text" v-model="proName" />
-    商品:<input type="text" v-model="changeProName" disabled="disabled" /><br>
-
-    单价:<input type="text" v-model="proPrice" />
-    单价:<input type="text" v-model="changeProPrice" /><br>
-
-    库存:<input type="text" v-model="proStock" />
-    库存:<input type="text" v-model="changeProStock" /><br>
-
-    <button @click="addProduct();" class="btnadd">添加商品</button>
-    <button @click="updateProduct();" class="btnup">确认修改</button>
-
     <table border="1" class="tb">
         <th>商品名</th>
         <th>商品单价</th>
@@ -56,6 +49,20 @@
             </td>
         </tr>
     </table>
+
+    <div class="operation">
+        商品:<input type="text" v-model="proName" />
+        商品:<input type="text" v-model="changeProName" disabled="disabled" /><br>
+
+        单价:<input type="text" v-model="proPrice" />
+        单价:<input type="text" v-model="changeProPrice" /><br>
+
+        库存:<input type="text" v-model="proStock" />
+        库存:<input type="text" v-model="changeProStock" /><br>
+
+        <button @click="addProduct();" class="btnadd">添加商品</button>
+        <button @click="updateProduct();" class="btnup">确认修改</button>
+    </div>
 </div>
 </body>
 
