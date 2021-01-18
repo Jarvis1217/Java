@@ -6,26 +6,65 @@
     <script src="../static/js/jquery-3.5.1.min.js"></script>
     <script src="../static/js/vue.js"></script>
     <script src="../static/js/axios.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
 </head>
 
 <style>
-    #app {
-        margin: auto;
-        width: 300px;
-        height: auto;
-        text-align: center;
-        line-height: 30px;
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #8000ff;
+        color: white;
     }
-    .btn {
-        margin-top: 15px;
+    #app {
+        width: 600px;
+        margin: auto;
+        text-align: center;
+        display: block;
+        position: relative;
+        top: 50%;
+        margin-top: -150px;
+    }
+    .mybtn {
+        width: 100px;
+        margin-left: 40px;
+        margin-top: 10px;
+    }
+    .title {
+        margin-left: 35px;
     }
 </style>
 
 <body>
     <div id="app">
-        账号: <input type="text" required="required" v-model="uname" /> <br>
-        密码: <input type="password" required="required" v-model="upass" /> <br>
-        <input type="button" value="登录" @click="log();" class="btn"/>
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <h2 class="title">Login</h2>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2 col-sm-offset-2">用户名:</label>
+                <div class="col-sm-5">
+                    <input type="text" required="required" v-model="uname" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2 col-sm-offset-2">密码:</label>
+                <div class="col-sm-5">
+                    <input type="password" required="required" v-model="upass" class="form-control"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="button" value="登录" @click="log();" class="mybtn btn btn-info"/>
+            </div>
+        </form>
+
     </div>
 </body>
 

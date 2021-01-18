@@ -6,20 +6,38 @@
     <script src="../static/js/jquery-3.5.1.min.js"></script>
     <script src="../static/js/vue.js"></script>
     <script src="../static/js/axios.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
 </head>
 
 <style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #8000ff;
+        color: white;
+    }
+    #app {
+        display: block;
+        position: relative;
+        top: 50%;
+        margin-top: -150px;
+    }
     .tb {
         margin: auto;
+        text-align: center;
+        width: 300px;
     }
 </style>
 
 <body>
     <div id="app">
-        <table border="1" class="tb">
-            <th>商品名</th>
-            <th>商品单价</th>
-            <th>库存余量</th>
+        <table class="tb table table-bordered">
+            <th style="text-align: center">商品名</th>
+            <th style="text-align: center">商品单价</th>
+            <th style="text-align: center">库存余量</th>
 
             <tr v-for="pro of products">
                 <td>{{ pro.product }}</td>
