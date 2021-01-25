@@ -6,12 +6,12 @@
 
     <!--取别名-->
     <typeAliases>
-        <package name="com.myself.ssm.pojo"/>
+        <package name="com.myself.demo.pojo"/>
     </typeAliases>
 
     <!--绑定mapper，根据自己的项目设置-->
     <mappers>
-        <mapper resource="com/myself/ssm/mapper/BaseMapper.xml"/>
+        <mapper class="com.myself.demo.mapper.BookMapper" />
     </mappers>
 
 </configuration>

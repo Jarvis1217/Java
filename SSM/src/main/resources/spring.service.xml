@@ -8,11 +8,11 @@
    http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- 扫描service相关的bean -->
-    <context:component-scan base-package="com.myself.ssm.service" />
+    <context:component-scan base-package="com.myself.demo.service" />
 
     <!--ServiceImpl注入到IOC容器中，此处需要修改成自己的-->
-    <bean id="baseServiceImpl" class="com.myself.ssm.service.Impl.BaseServiceImpl">
-        <property name="baseMapper" ref="baseMapper"/>
+    <bean id="bookServiceImpl" class="com.myself.demo.service.Impl.BookServiceImpl">
+        <property name="bookMapper" ref="bookMapper"/>
     </bean>
 
     <!-- 配置事务管理器 -->
