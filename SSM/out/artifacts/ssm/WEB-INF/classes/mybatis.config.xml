@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--取别名-->
+    <typeAliases>
+        <package name="com.myself.ssm.pojo"/>
+    </typeAliases>
+
+    <!--绑定mapper，根据自己的项目设置-->
+    <mappers>
+        <mapper resource="com/myself/ssm/mapper/BaseMapper.xml"/>
+    </mappers>
+
+</configuration>
