@@ -40,6 +40,7 @@
         <property name="dataSource" ref="dataSource"/>
         <!-- 配置MyBaties全局配置文件:MyBatis-config.xml -->
         <property name="configLocation" value="classpath:mybatis.config.xml"/>
+        <property name="mapperLocations" value="classpath*:mappers/*Mapper.xml"/>
     </bean>
 
     <!-- 4.配置扫描Dao接口包，动态实现Dao接口注入到spring容器中 -->
@@ -47,7 +48,7 @@
         <!-- 注入sqlSessionFactory -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <!-- 给出需要扫描Dao接口包 -->
-        <property name="basePackage" value="com.myself.demo.mapper"/>
+        <property name="basePackage" value="com.myself.ssmApi.mapper"/>
     </bean>
 
 </beans>
