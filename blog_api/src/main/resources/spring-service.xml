@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:contest="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--1.扫描service下的包-->
+
+    <contest:component-scan base-package="com.myself.blog_api.service"/>
+
+    <!--2.将我们的所有业务类注入到Spring,可以使用配置或者注解实现-->
+<!--    <bean id="bookServiceImpl" class="com.sj.ssmbuild.service.BookServiceImpl">-->
+<!--        <property name="bookMapper" ref="bookMapper"/>-->
+<!--    </bean>-->
+    <bean id="userServiceImpl" class="com.myself.blog_api.service.impl.UserServiceImpl">
+        <property name="userMapper" ref="userMapper"/>
+    </bean>
+    <bean id="blogServiceImpl" class="com.myself.blog_api.service.impl.BlogServiceImpl">
+        <property name="blogMapper" ref="blogMapper"/>
+    </bean>
+    <!--3.声明式事务配置-->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--4.aop事务支持！-->
+</beans>

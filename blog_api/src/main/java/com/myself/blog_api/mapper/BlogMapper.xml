@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myself.blog_api.mapper.BlogMapper">
+    <cache eviction="LRU" flushInterval="200000" readOnly="true" size="1024"/>
+    <resultMap id="BlogMap" type="Blog">
+        <!--column数据库中的字段， property实体类中的属性-->
+        <!--同名可以省略不写-->
+        <!--        <result column="id" property="id"/>-->
+        <!--        <result column="name" property="name"/>-->
+        <!--        <result column="password" property="password"/>-->
+    </resultMap>
+    <select id="queryAllBlog" resultType="Blog">
+        select * from blog.blog
+    </select>
+
+    <select id="queryBlogByName" parameterType="String" resultType="Blog">
+        select * from blog.blog
+        where bTitle = #{bTitle}
+    </select>
+
+    <select id="selectBlogPageWhere" parameterType="map" resultMap="BlogMap" flushCache="false" useCache="true">
+        select * from blog.blog
+        <where>
+            <if test="bTitle!=null and bTitle!=''">
+                lower(bTitle) like concat("%", lower(#{bTitle}), "%")
+            </if>
+        </where>
+    </select>
+
+    <insert id="addBlog" parameterType="Blog">
+        insert into blog.blog values(null, #{bTitle}, #{bContent}, #{bDate});
+    </insert>
+
+    <delete id="deleteBlogByName" parameterType="String">
+        delete from blog.blog
+        where bTitle = #{bTitle}
+    </delete>
+
+    <select id="queryAllNum" resultType="int">
+        select count(*) from blog.blog;
+    </select>
+
+    <select id="queryBlogById" parameterType="int" resultType="Blog">
+        select * from blog.blog
+        where bId = #{bId};
+    </select>
+</mapper>

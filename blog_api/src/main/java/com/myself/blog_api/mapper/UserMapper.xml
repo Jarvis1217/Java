@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myself.blog_api.mapper.UserMapper">
+    <select id="userLogin" resultType="Boolean">
+        select * from blog.token
+        where token = #{token}
+    </select>
+
+    <select id="queryToken" resultType="String">
+        select token from blog.token
+    </select>
+
+    <update id="updateToken" parameterType="String">
+        update blog.token set token = #{token} where tId = 1;
+    </update>
+
+    <insert id="userRegister" parameterType="User">
+        insert into blog.token values(null, #{token});
+    </insert>
+</mapper>
