@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cash Book</title>
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/vue.js"></script>
+    <script src="../static/js/axios.js"></script>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <script src="../static/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../static/js/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+
+<style>
+    .mBody {
+        /*border: 1px red solid;*/
+        text-align: center;
+    }
+
+    .myTable {
+        text-align: center;
+        width: 800px;
+        margin: 30px auto auto;
+    }
+</style>
+
+<body>
+<div class="mBody" id="app">
+    <h2>记账管理</h2>
+    <form class="form-inline" @submit.prevent>
+        <div class="form-group">
+            <label class="control-label">账单类型:</label>
+            <select class="form-control" v-model="scType">
+                <option>不限</option>
+                <option>支出</option>
+                <option>收入</option>
+                <option>借出</option>
+                <option>借入</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dtp_input2" class="control-label">开始时间:</label>
+            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd"
+                 data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                <input class="form-control" size="16" type="text" readonly>
+                <span class="input-group-addon" id="begin"><span class="glyphicon glyphicon-remove"></span></span>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <input type="hidden" id="dtp_input2" value="" /><br/>
+        </div>
+
+        <div class="form-group">
+            <label for="dtp_input3" class="control-label">结束时间:</label>
+            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd"
+                 data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
+                <input class="form-control" size="16" type="text" readonly>
+                <span class="input-group-addon" id="ended"><span class="glyphicon glyphicon-remove"></span></span>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <input type="hidden" id="dtp_input3" value="" /><br/>
+        </div>
+    </form>
+    <br>
+    <button type="button" class="btn btn-primary" @click="Search();">查询</button>
+    <button type="button" class="btn btn-danger" @click="resetA();">重置</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">添加</button>
+
+    <table class="myTable table table-hover">
+        <tr>
+            <th style="text-align: center;">类型</th>
+            <th style="text-align: center;">价格</th>
+            <th style="text-align: center;">日期</th>
+            <th style="text-align: center;">备注</th>
+        </tr>
+
+        <tr v-for="bill in billList">
+            <td>{{ bill.type }}</td>
+            <td>{{ bill.price }}</td>
+            <td>{{ bill.date | stamp2Date }}</td>
+            <td>{{ bill.mark }}</td>
+        </tr>
+    </table>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="height: 500px;width: 700px;">
+            <div class="modal-header">
+                <button id="wantU" type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    新增记账
+                </h4>
+            </div>
+
+            <div style="margin-top: 15px">
+                <strong>收支类型:</strong>
+                <template v-for="item in type">
+                    <input style="margin-left: 50px" type="radio" :value="item" v-model="iCheckedValue">{{ item }}
+                </template>
+            </div>
+            <form class="form-inline" style="margin-top: 15px;" @submit.prevent>
+                <div class="form-group">
+                    <label for="exampleInputName2">时间</label>
+                    <input type="text" v-model="iTime" class="form-control" id="exampleInputName2"
+                           placeholder="yyyy-mm-dd">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail2">金额</label>
+                    <input type="email" v-model="iPrice" class="form-control" id="exampleInputEmail2">
+                </div>
+            </form>
+
+            <textarea style="width: 500px;height: 200px;margin-top: 15px" v-model="iExplain"
+                      placeholder="添加备注..."></textarea>
+
+            <br>
+
+            <button class="btn btn-primary" @click="addOne();">提交</button>
+            <button class="btn btn-danger" @click="resetB();">重置</button>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+</div>
+</body>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            iCheckedValue: '',
+            iTime: '',
+            iPrice: '',
+            iExplain: '',
+            type: ["收入", "支出", "借入", "借出"],
+            scType: '不限',
+            billList: []
+        },
+        mounted: function () {
+            $('.form_date').datetimepicker({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView: 2,
+                forceParse: 0
+            });
+            axios.get("http://localhost:8080/allBill").then(resp => {
+                this.billList = resp.data;
+                console.log(this.billList);
+            });
+        },
+        methods: {
+            resetA: function () {
+                this.scType = '不限';
+                $('#begin').click();
+                $('#ended').click();
+            },
+            resetB: function () {
+                this.iCheckedValue = '';
+                this.iTime = '';
+                this.iPrice = '';
+                this.iExplain = '';
+            },
+            addOne: function () {
+                let params = new URLSearchParams();
+                params.append("type", this.iCheckedValue);
+                params.append("price", this.iPrice);
+                params.append("date", this.iTime);
+                params.append("explain", this.iExplain);
+
+                axios.post("http://localhost:8080/insert", params).then(resp => {
+                    if(resp.data === 'success') {
+                        axios.get("http://localhost:8080/allBill").then(resp => {
+                            this.billList = resp.data;
+                        });
+                    }
+                });
+
+
+                $("#wantU").click();
+                this.resetB();
+            },
+            Search:function() {
+                let params = new URLSearchParams();
+                params.append("scType", this.scType);
+                params.append("timeBegin", $('#dtp_input2').val());
+                params.append("timeEnded", $('#dtp_input3').val());
+
+                axios.post("http://localhost:8080/search", params).then(resp => {
+                    this.billList = resp.data;
+                });
+            }
+        },
+        filters: {
+            stamp2Date:function (timestamp) {
+                if (timestamp) {
+                    const date = new Date(timestamp * 1000); //时间戳为10位需*1000(为秒)，时间戳为13位的话不需乘1000(毫秒)
+                    const Y = date.getFullYear();
+                    const M = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                    const D = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+
+                    return Y + "-" + M + "-" + D;
+                }
+            }
+        }
+    });
+</script>
+</html>
