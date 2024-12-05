@@ -11,7 +11,7 @@ public class WebClientConfig {
     public WebClient webClient() {
         return WebClient.builder()
                 .baseUrl("https://api.deepseek.com")
-                .defaultHeader("Authorization", "Bearer sk-c90d850d882c461296ac9a503496f46b")
+                .defaultHeader("Authorization", "Bearer <API-Key>")
                 .build();
     }
 }
