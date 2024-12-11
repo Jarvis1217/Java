@@ -1,8 +1,9 @@
 package com.test.LLM.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.test.LLM.filter.UsersFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,16 +17,18 @@ public class OpenAIService {
 
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
+    private final UsersFilter usersFilter;
 
-    public OpenAIService(WebClient webClient, ObjectMapper objectMapper) {
+    public OpenAIService(WebClient webClient, ObjectMapper objectMapper, UsersFilter usersFilter) {
         this.webClient = webClient;
         this.objectMapper = objectMapper;
+        this.usersFilter = usersFilter;
     }
 
-    public Flux<String> getStreamedResponse(String userMessage) {
-        // 消息列表
-        List<OpenAIRequest.Message> messages = new ArrayList<>();
-        messages.add(new OpenAIRequest.Message("system", ""));
+    public Flux<String> getStreamedResponse(String userMessage, String ipAddress) {
+
+        // 获取消息列表
+        List<OpenAIRequest.Message> messages = usersFilter.getUsersMap().get(ipAddress);
         messages.add(new OpenAIRequest.Message("user", userMessage));
         
         OpenAIRequest request = new OpenAIRequest();
