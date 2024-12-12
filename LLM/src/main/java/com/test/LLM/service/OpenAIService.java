@@ -48,7 +48,6 @@ public class OpenAIService {
                     if ("[DONE]".equals(responseStr)) {
                         // 如果是 [DONE]，则不进行解析，触发完成逻辑
                         messages.add(new OpenAIRequest.Message("assistant", fullMsg.toString()));
-                        System.out.println(messages);
                         return Mono.empty();
                     } else {
                         // 尝试将非 [DONE] 的字符串解析为 OpenAIResponse
