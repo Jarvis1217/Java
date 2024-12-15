@@ -37,7 +37,7 @@ public class ChatLLM extends Application {
 
     private final List<ObjectNode> messages = new ArrayList<>();
     private static final String API_URL = "https://api.deepseek.com/chat/completions";
-    private static final String API_KEY = "sk-d5888fec891d4a52928514a5b547f423";
+    private static final String API_KEY = "<API-Key>";
 
     public ChatLLM() {
         ObjectMapper objectMapper = new ObjectMapper();
