@@ -197,7 +197,6 @@ public class ChatLLM extends Application {
             HBox aiMessageBox = new HBox(aiMessage);
             aiMessageBox.setStyle("-fx-alignment: center-left;");
             chatDisplay.getChildren().add(aiMessageBox);
-            scrollPane.setVvalue(scrollPane.getVmax());
         });
 
         client.newCall(request).enqueue(new Callback() {
