@@ -1,13 +1,11 @@
-package com.test.LLM;
+package com.llm.spring_ai;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LlmApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
+class SpringAiApplicationTests {
+    @Test
+    void contextLoads() {
+    }
 }
